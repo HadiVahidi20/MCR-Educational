@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8" style={{ backgroundColor: '#F7F8FC' }}>
+    <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-neutral-light">
       <div className="text-center space-y-6 max-w-2xl">
-        <h1 className="text-4xl font-bold" style={{ color: '#1E3A5F' }}>
+        <h1 className="text-4xl font-bold text-primary">
           MCR Educational
         </h1>
-        <p className="text-lg" style={{ color: '#1A1A2E', opacity: 0.7 }}>
-          Empowering Young People Through Dance, Education &amp; Support
+        <p className="text-lg text-neutral-dark/70">
+          Empowering Young People Through Dance, Education & Support
         </p>
         <div className="flex gap-4 justify-center">
           <Button asChild>

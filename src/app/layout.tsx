@@ -1,5 +1,27 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
+
+const inter = localFont({
+  src: "../fonts/inter-latin-wght-normal.woff2",
+  variable: "--font-inter",
+  display: "swap",
+  weight: "100 900",
+});
+
+const plusJakartaSans = localFont({
+  src: "../fonts/plus-jakarta-sans-latin-wght-normal.woff2",
+  variable: "--font-plus-jakarta-sans",
+  display: "swap",
+  weight: "200 800",
+});
+
+const spaceGrotesk = localFont({
+  src: "../fonts/space-grotesk-latin-wght-normal.woff2",
+  variable: "--font-space-grotesk",
+  display: "swap",
+  weight: "300 700",
+});
 
 export const metadata: Metadata = {
   title: "MCR Educational - Empowering Young People Through Dance, Education & Support",
@@ -13,7 +35,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body
+        className={`${inter.variable} ${plusJakartaSans.variable} ${spaceGrotesk.variable} antialiased`}
+      >
         {children}
       </body>
     </html>
