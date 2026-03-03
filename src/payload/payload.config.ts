@@ -8,6 +8,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import Users from './collections/Users'
 import Pages from './collections/Pages'
 import Media from './collections/Media'
+import Referrals from './collections/Referrals'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +24,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, Pages, Media],
+  collections: [Users, Pages, Media, Referrals],
 
   editor: lexicalEditor(),
 
