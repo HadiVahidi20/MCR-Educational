@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import CookieBanner from "@/components/layout/CookieBanner";
 
 const inter = localFont({
   src: "../fonts/inter-latin-wght-normal.woff2",
@@ -45,6 +46,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <Toaster richColors position="bottom-right" />
+        <CookieBanner />
       </body>
     </html>
   );
