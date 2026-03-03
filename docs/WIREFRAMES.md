@@ -240,27 +240,27 @@
 │ │  "A Day at MCR Educational"                                 │ │
 │ │                                                             │ │
 │ │  09:00  ━━  Welcome & Check-in                              │ │
-│ │              Breakfast available, morning circle             │ │
+│ │              Breakfast available, morning circle            │ │
 │ │  09:30  ━━  Academic Session 1                              │ │
-│ │              English or Maths (small groups)                 │ │
+│ │              English or Maths (small groups)                │ │
 │ │  10:45  ━━  Break                                           │ │
-│ │              Snacks, social time                             │ │
+│ │              Snacks, social time                            │ │
 │ │  11:00  ━━  Creative Session                                │ │
-│ │              Dance / Music / Drama / Art                     │ │
+│ │              Dance / Music / Drama / Art                    │ │
 │ │  12:30  ━━  Lunch                                           │ │
-│ │              Hot meal provided                               │ │
+│ │              Hot meal provided                              │ │
 │ │  13:15  ━━  Wellbeing / Life Skills                         │ │
-│ │              Mentoring, cooking, employability               │ │
+│ │              Mentoring, cooking, employability              │ │
 │ │  14:30  ━━  Academic Session 2 or Enrichment                │ │
-│ │              Catch-up work or activities                     │ │
+│ │              Catch-up work or activities                    │ │
 │ │  15:15  ━━  End of Day Check-out                            │ │
-│ │              Reflection, goals for tomorrow                  │ │
+│ │              Reflection, goals for tomorrow                 │ │
 │ └─────────────────────────────────────────────────────────────┘ │
 │                                                                 │
 │ ┌─ SAFEGUARDING PROMISE ──────────────────────────────────────┐ │
 │ │  [Shield icon]                                              │ │
 │ │  "Your child's safety is our top priority"                  │ │
-│ │  • DBS-checked staff  • CCTV monitored                     │ │
+│ │  • DBS-checked staff  • CCTV monitored                      │ │
 │ │  • Designated Safeguarding Lead  • Regular training         │ │
 │ │  [View Full Safeguarding Policy]                            │ │
 │ └─────────────────────────────────────────────────────────────┘ │
@@ -269,7 +269,7 @@
 │ │  Carousel of parent quotes                                  │ │
 │ └─────────────────────────────────────────────────────────────┘ │
 │                                                                 │
-│ ┌─ FAQs (ACCORDION) ─────────────────────────────────────────┐ │
+│ ┌─ FAQs (ACCORDION)  ─────────────────────────────────────────┐ │
 │ │  ▸ How does my child get referred?                          │ │
 │ │  ▸ What qualifications can my child achieve?                │ │
 │ │  ▸ Is transport provided?                                   │ │
