@@ -23,10 +23,10 @@ const quickLinks = [
 ];
 
 const policyLinks = [
-  { href: '/policies/privacy', label: 'Privacy Policy' },
-  { href: '/policies/safeguarding', label: 'Safeguarding' },
-  { href: '/policies/cookies', label: 'Cookie Policy' },
-  { href: '/policies/complaints', label: 'Complaints' },
+  { href: '/policies/privacy-policy', label: 'Privacy Policy' },
+  { href: '/policies/safeguarding-policy', label: 'Safeguarding' },
+  { href: '/policies/cookie-policy', label: 'Cookie Policy' },
+  { href: '/policies/complaints-procedure', label: 'Complaints' },
 ];
 
 const socialLinks = [
