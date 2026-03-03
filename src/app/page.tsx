@@ -1,6 +1,12 @@
 import Link from 'next/link';
 import { ArrowRight, School, Users, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import StatsCounter from '@/components/home/StatsCounter';
+import ProgrammesGrid from '@/components/home/ProgrammesGrid';
+import ValuesSection from '@/components/home/ValuesSection';
+import TestimonialsCarousel from '@/components/home/TestimonialsCarousel';
+import NewsPreview from '@/components/home/NewsPreview';
+import CtaBanner from '@/components/home/CtaBanner';
 
 // ─── Audience Selector Data ───────────────────────────────────────────────────
 const audiences = [
@@ -12,9 +18,9 @@ const audiences = [
     cta: 'Refer a Young Person',
     href: '/for-schools',
     accent: 'bg-primary',
-    ring: 'focus-visible:ring-primary',
     hoverBorder: 'hover:border-primary',
     hoverTitle: 'group-hover:text-primary',
+    ring: 'focus-visible:ring-primary',
   },
   {
     Icon: Users,
@@ -24,9 +30,9 @@ const audiences = [
     cta: 'Learn More',
     href: '/for-parents',
     accent: 'bg-secondary',
-    ring: 'focus-visible:ring-secondary',
     hoverBorder: 'hover:border-secondary',
     hoverTitle: 'group-hover:text-secondary',
+    ring: 'focus-visible:ring-secondary',
   },
   {
     Icon: Sparkles,
@@ -36,9 +42,9 @@ const audiences = [
     cta: 'See What We Do',
     href: '/for-students',
     accent: 'bg-accent',
-    ring: 'focus-visible:ring-accent',
     hoverBorder: 'hover:border-accent',
     hoverTitle: 'group-hover:text-accent',
+    ring: 'focus-visible:ring-accent',
   },
 ];
 
@@ -46,26 +52,20 @@ const audiences = [
 export default function Home() {
   return (
     <main id="main-content">
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
+
+      {/* ── 1. HERO ───────────────────────────────────────────────────────── */}
       <section
         aria-labelledby="hero-heading"
         className="relative min-h-[92vh] flex items-center overflow-hidden bg-primary"
       >
         {/* Decorative background shapes */}
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          aria-hidden="true"
-        >
-          {/* Large top-right circle */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
           <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-secondary/20 blur-3xl" />
-          {/* Bottom-left accent */}
           <div className="absolute -bottom-24 -left-24 w-[400px] h-[400px] rounded-full bg-accent/15 blur-3xl" />
-          {/* Mid subtle dot grid */}
           <div
             className="absolute inset-0 opacity-[0.04]"
             style={{
-              backgroundImage:
-                'radial-gradient(circle, white 1px, transparent 1px)',
+              backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
               backgroundSize: '32px 32px',
             }}
           />
@@ -76,11 +76,8 @@ export default function Home() {
           <div className="max-w-3xl">
             {/* Eyebrow pill */}
             <div className="inline-flex items-center gap-2 bg-white/10 text-white/90 text-xs sm:text-sm font-medium px-4 py-1.5 rounded-full mb-8 border border-white/20">
-              <span
-                className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"
-                aria-hidden="true"
-              />
-              MCR HQ CIC — Alternative Education Provision
+              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" aria-hidden="true" />
+              MCR HQ CIC — Alternative Education Provision, Greater Manchester
             </div>
 
             {/* Main headline */}
@@ -103,10 +100,9 @@ export default function Home() {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-white/70 text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl font-body">
-              Alternative provision in Greater Manchester that puts creativity
-              and wellbeing at the heart of learning — for young people aged
-              11–16 who deserve a fresh start.
+            <p className="text-white/70 text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl">
+              Alternative provision in Greater Manchester that puts creativity and wellbeing
+              at the heart of learning — for young people aged 11–16 who deserve a fresh start.
             </p>
 
             {/* CTAs */}
@@ -132,20 +128,10 @@ export default function Home() {
             </div>
 
             {/* Quick trust signals */}
-            <div
-              className="mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm text-white/50"
-              aria-label="Key facts"
-            >
-              {[
-                '150+ students supported',
-                '95% attendance rate',
-                '40+ partner schools',
-              ].map((fact) => (
+            <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm text-white/50" aria-label="Key facts">
+              {['150+ students supported', '95% attendance rate', '40+ partner schools'].map((fact) => (
                 <span key={fact} className="flex items-center gap-2">
-                  <span
-                    className="w-1 h-1 rounded-full bg-accent"
-                    aria-hidden="true"
-                  />
+                  <span className="w-1 h-1 rounded-full bg-accent" aria-hidden="true" />
                   {fact}
                 </span>
               ))}
@@ -153,14 +139,17 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Bottom fade */}
+        {/* Bottom fade into stats section */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-neutral-light to-transparent pointer-events-none"
+          className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-primary to-transparent pointer-events-none"
           aria-hidden="true"
         />
       </section>
 
-      {/* ── AUDIENCE SELECTOR ─────────────────────────────────────────────── */}
+      {/* ── 2. IMPACT STATS ───────────────────────────────────────────────── */}
+      <StatsCounter />
+
+      {/* ── 3. AUDIENCE SELECTOR ──────────────────────────────────────────── */}
       <section
         aria-labelledby="audience-heading"
         className="bg-neutral-light py-20 sm:py-24"
@@ -173,58 +162,54 @@ export default function Home() {
             >
               How can we help you?
             </h2>
-            <p className="text-neutral-dark/60 text-base sm:text-lg max-w-xl mx-auto font-body">
-              Choose the section that best describes you to find the
-              information most relevant to your needs.
+            <p className="text-neutral-dark/60 text-base sm:text-lg max-w-xl mx-auto">
+              Choose the section that best describes you to find the information most relevant to your needs.
             </p>
           </div>
 
-          {/* Cards */}
-          <ul
-            role="list"
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
-          >
-            {audiences.map(
-              ({ Icon, title, description, cta, href, accent, ring, hoverBorder, hoverTitle }) => (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    className={`group flex flex-col h-full bg-white rounded-2xl border-2 border-transparent ${hoverBorder} p-8 shadow-sm hover:shadow-lg transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 ${ring} focus-visible:ring-offset-2`}
-                    aria-label={title}
-                  >
-                    {/* Icon */}
-                    <div
-                      className={`w-14 h-14 rounded-xl ${accent} text-white flex items-center justify-center mb-6 transition-transform duration-200 group-hover:scale-110`}
-                    >
-                      <Icon size={26} aria-hidden="true" />
-                    </div>
-
-                    {/* Text */}
-                    <h3
-                      className={`font-heading font-bold text-xl text-neutral-dark mb-3 transition-colors duration-150 ${hoverTitle}`}
-                    >
-                      {title}
-                    </h3>
-                    <p className="text-neutral-dark/60 text-sm leading-relaxed font-body flex-1">
-                      {description}
-                    </p>
-
-                    {/* CTA row */}
-                    <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all duration-150">
-                      {cta}
-                      <ArrowRight
-                        size={15}
-                        aria-hidden="true"
-                        className="transition-transform duration-150 group-hover:translate-x-1"
-                      />
-                    </div>
-                  </Link>
-                </li>
-              )
-            )}
+          <ul role="list" className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {audiences.map(({ Icon, title, description, cta, href, accent, hoverBorder, hoverTitle, ring }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className={`group flex flex-col h-full bg-white rounded-2xl border-2 border-transparent ${hoverBorder} p-8 shadow-sm hover:shadow-lg transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 ${ring} focus-visible:ring-offset-2`}
+                  aria-label={title}
+                >
+                  <div className={`w-14 h-14 rounded-xl ${accent} text-white flex items-center justify-center mb-6 transition-transform duration-200 group-hover:scale-110`}>
+                    <Icon size={26} aria-hidden="true" />
+                  </div>
+                  <h3 className={`font-heading font-bold text-xl text-neutral-dark mb-3 transition-colors duration-150 ${hoverTitle}`}>
+                    {title}
+                  </h3>
+                  <p className="text-neutral-dark/60 text-sm leading-relaxed flex-1">
+                    {description}
+                  </p>
+                  <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:gap-2.5 transition-all duration-150">
+                    {cta}
+                    <ArrowRight size={15} aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-1" />
+                  </div>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
+
+      {/* ── 4. PROGRAMMES OVERVIEW ────────────────────────────────────────── */}
+      <ProgrammesGrid />
+
+      {/* ── 5. VALUES ─────────────────────────────────────────────────────── */}
+      <ValuesSection />
+
+      {/* ── 6. TESTIMONIALS ───────────────────────────────────────────────── */}
+      <TestimonialsCarousel />
+
+      {/* ── 7. NEWS & EVENTS ──────────────────────────────────────────────── */}
+      <NewsPreview />
+
+      {/* ── 8. CTA BANNER ─────────────────────────────────────────────────── */}
+      <CtaBanner />
+
     </main>
   );
 }
