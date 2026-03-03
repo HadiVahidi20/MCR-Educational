@@ -1,15 +1,16 @@
-import type { NextConfig } from "next";
+import { withPayload } from '@payloadcms/next/withPayload'
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "images.unsplash.com",
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
       },
       {
-        protocol: "https",
-        hostname: "cdn.mcr-educational.co.uk",
+        protocol: 'https',
+        hostname: 'cdn.mcr-educational.co.uk',
       },
     ],
   },
@@ -22,8 +23,8 @@ const nextConfig: NextConfig = {
       //   destination: '/new-path',
       //   permanent: true,
       // },
-    ];
+    ]
   },
-};
+}
 
-export default nextConfig;
+export default withPayload(nextConfig)
