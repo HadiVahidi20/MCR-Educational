@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 const inter = localFont({
   src: "../fonts/inter-latin-wght-normal.woff2",
@@ -38,7 +40,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${plusJakartaSans.variable} ${spaceGrotesk.variable} antialiased`}
       >
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
