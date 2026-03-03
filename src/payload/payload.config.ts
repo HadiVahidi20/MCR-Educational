@@ -12,6 +12,7 @@ import Referrals from './collections/Referrals'
 import Programmes from './collections/Programmes'
 import TeamMembers from './collections/TeamMembers'
 import Posts from './collections/Posts'
+import Events from './collections/Events'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,7 +28,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, Pages, Media, Referrals, Programmes, TeamMembers, Posts],
+  collections: [Users, Pages, Media, Referrals, Programmes, TeamMembers, Posts, Events],
 
   editor: lexicalEditor(),
 
