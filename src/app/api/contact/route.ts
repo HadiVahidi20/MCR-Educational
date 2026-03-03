@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
+import { emailRateLimiter } from '@/lib/rate-limiter'
 
 const schema = z.object({
   role: z.enum(['school', 'local-authority', 'parent', 'student', 'other']),
@@ -12,6 +13,22 @@ const schema = z.object({
 })
 
 export async function POST(request: Request) {
+  // Rate limiting
+  const ip =
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+    request.headers.get('x-real-ip') ??
+    'anonymous'
+
+  if (!emailRateLimiter.isAllowed(ip)) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      {
+        status: 429,
+        headers: { 'Retry-After': '60' },
+      }
+    )
+  }
+
   let body: unknown
   try {
     body = await request.json()
@@ -21,56 +38,74 @@ export async function POST(request: Request) {
 
   const parsed = schema.safeParse(body)
   if (!parsed.success) {
-    return NextResponse.json({ error: 'Validation failed', issues: parsed.error.issues }, { status: 422 })
+    return NextResponse.json(
+      { error: 'Validation failed', issues: parsed.error.issues },
+      { status: 422 }
+    )
   }
 
   const { _hp, ...data } = parsed.data
 
-  // Silently drop honeypot-filled submissions
   if (_hp) {
     return NextResponse.json({ ok: true })
   }
 
-  // Send email via Resend when API key is configured
+  const roleLabel: Record<string, string> = {
+    school: 'School / Teacher',
+    'local-authority': 'Local Authority',
+    parent: 'Parent / Carer',
+    student: 'Student / Young Person',
+    other: 'Other',
+  }
+
+  // Send emails via Resend when API key is configured
   if (process.env.RESEND_API_KEY) {
     try {
       const { Resend } = await import('resend')
+      const { render } = await import('@react-email/components')
+      const { default: ContactAcknowledgment } = await import('@/emails/ContactAcknowledgment')
+      const { default: ContactNotification } = await import('@/emails/ContactNotification')
+
       const resend = new Resend(process.env.RESEND_API_KEY)
+      const fromAddress = process.env.EMAIL_FROM ?? 'noreply@mcreducational.co.uk'
+      const teamAddress = process.env.EMAIL_TEAM ?? 'info@mcreducational.co.uk'
 
-      const roleLabel: Record<string, string> = {
-        school: 'School / College',
-        'local-authority': 'Local Authority',
-        parent: 'Parent / Carer',
-        student: 'Young Person',
-        other: 'Other',
-      }
-
-      await resend.emails.send({
-        from: process.env.EMAIL_FROM ?? 'noreply@mcreducational.co.uk',
-        to: 'info@mcreducational.co.uk',
-        replyTo: data.email,
-        subject: `New contact form submission from ${data.name}`,
-        text: [
-          `From: ${data.name} (${roleLabel[data.role] ?? data.role})`,
-          `Email: ${data.email}`,
-          data.phone ? `Phone: ${data.phone}` : null,
-          data.organisation ? `Organisation: ${data.organisation}` : null,
-          '',
-          'Message:',
-          data.message,
-        ]
-          .filter(Boolean)
-          .join('\n'),
-      })
+      await Promise.allSettled([
+        // Acknowledgment to sender
+        resend.emails.send({
+          from: fromAddress,
+          to: data.email,
+          subject: 'We received your message — MCR Educational',
+          html: await render(ContactAcknowledgment({ name: data.name, message: data.message })),
+        }),
+        // Internal notification
+        resend.emails.send({
+          from: fromAddress,
+          to: teamAddress,
+          subject: `New Contact Form Submission — ${data.name}`,
+          html: await render(
+            ContactNotification({
+              name: data.name,
+              email: data.email,
+              phone: data.phone,
+              role: roleLabel[data.role] ?? data.role,
+              organisation: data.organisation,
+              message: data.message,
+            })
+          ),
+        }),
+      ])
     } catch (err) {
-      console.error('[contact] Resend error:', err)
-      // Don't expose internal errors to the client
-      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+      console.error('[contact] Email error:', err)
+      // Non-fatal — form submission succeeded, log for monitoring
     }
   } else {
-    // Development fallback — log to console
-    console.info('[contact] New submission (no RESEND_API_KEY set):', data)
+    console.info('[contact] New submission (Resend not configured):', {
+      name: data.name,
+      email: data.email,
+      role: data.role,
+    })
   }
 
-  return NextResponse.json({ ok: true })
+  return NextResponse.json({ ok: true }, { status: 200 })
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { referralSchema } from '@/lib/referral-schema'
+import { emailRateLimiter } from '@/lib/rate-limiter'
 
 function generateReferenceNumber(): string {
   const year = new Date().getFullYear().toString().slice(2)
@@ -9,6 +10,22 @@ function generateReferenceNumber(): string {
 }
 
 export async function POST(request: Request) {
+  // Rate limiting
+  const ip =
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+    request.headers.get('x-real-ip') ??
+    'anonymous'
+
+  if (!emailRateLimiter.isAllowed(ip)) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      {
+        status: 429,
+        headers: { 'Retry-After': '60' },
+      }
+    )
+  }
+
   let body: unknown
   try {
     body = await request.json()
@@ -81,53 +98,54 @@ export async function POST(request: Request) {
     })
   }
 
-  // ── Send email notification ──────────────────────────────────────────────
+  // ── Send email notifications ─────────────────────────────────────────────
   if (process.env.RESEND_API_KEY) {
     try {
       const { Resend } = await import('resend')
+      const { render } = await import('@react-email/components')
+      const { default: ReferralConfirmation } = await import('@/emails/ReferralConfirmation')
+      const { default: ReferralNotification } = await import('@/emails/ReferralNotification')
+
       const resend = new Resend(process.env.RESEND_API_KEY)
+      const fromAddress = process.env.EMAIL_FROM ?? 'noreply@mcreducational.co.uk'
+      const teamAddress = process.env.EMAIL_TEAM ?? 'info@mcreducational.co.uk'
 
-      // Notify internal team
-      await resend.emails.send({
-        from: process.env.EMAIL_FROM ?? 'noreply@mcreducational.co.uk',
-        to: 'info@mcreducational.co.uk',
-        subject: `New Referral ${referenceNumber} — ${data.ypFirstName} ${data.ypLastName}`,
-        text: [
-          `Reference: ${referenceNumber}`,
-          `Referrer: ${data.referrerName} (${data.referrerRole}) — ${data.referrerSchool}`,
-          `Young person: ${data.ypFirstName} ${data.ypLastName}, Year ${data.ypYearGroup}, DOB ${data.ypDOB}`,
-          '',
-          `Reason: ${data.reasonForReferral}`,
-          `EHCP: ${data.hasEHCP}`,
-          `SEND: ${(data.sendNeeds ?? []).join(', ') || 'None specified'}`,
-          '',
-          `Attendance: ${data.currentAttendance}`,
-          `View in CMS: ${process.env.NEXT_PUBLIC_SITE_URL}/admin`,
-        ].join('\n'),
-      })
-
-      // Confirm to referrer
-      await resend.emails.send({
-        from: process.env.EMAIL_FROM ?? 'noreply@mcreducational.co.uk',
-        to: data.referrerEmail,
-        subject: `Referral Received — ${referenceNumber}`,
-        text: [
-          `Dear ${data.referrerName},`,
-          '',
-          `Thank you for submitting a referral for ${data.ypFirstName} ${data.ypLastName}.`,
-          '',
-          `Your reference number is: ${referenceNumber}`,
-          '',
-          'A member of our team will be in touch within one working day.',
-          '',
-          'MCR Educational',
-          '0161 123 4567',
-          'info@mcreducational.co.uk',
-        ].join('\n'),
-      })
+      await Promise.allSettled([
+        // Confirmation to referrer
+        resend.emails.send({
+          from: fromAddress,
+          to: data.referrerEmail,
+          subject: `Referral Received — ${referenceNumber}`,
+          html: await render(
+            ReferralConfirmation({
+              referrerName: data.referrerName,
+              referenceNumber,
+              ypFirstName: data.ypFirstName,
+            })
+          ),
+        }),
+        // Internal notification
+        resend.emails.send({
+          from: fromAddress,
+          to: teamAddress,
+          subject: `New Referral ${referenceNumber} — ${data.ypFirstName} ${data.ypLastName}`,
+          html: await render(
+            ReferralNotification({
+              referenceNumber,
+              referrerName: data.referrerName,
+              referrerEmail: data.referrerEmail,
+              referrerSchool: data.referrerSchool,
+              ypFirstName: data.ypFirstName,
+              ypLastName: data.ypLastName,
+              ypDOB: data.ypDOB,
+              reasonForReferral: data.reasonForReferral,
+            })
+          ),
+        }),
+      ])
     } catch (err) {
-      console.error('[referral] Resend error:', err)
-      // Non-fatal — return success anyway
+      console.error('[referral] Email error:', err)
+      // Non-fatal — referral saved, email failure logged
     }
   }
 
