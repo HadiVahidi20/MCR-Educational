@@ -9,6 +9,7 @@ import Users from './collections/Users'
 import Pages from './collections/Pages'
 import Media from './collections/Media'
 import Referrals from './collections/Referrals'
+import Programmes from './collections/Programmes'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,7 +25,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, Pages, Media, Referrals],
+  collections: [Users, Pages, Media, Referrals, Programmes],
 
   editor: lexicalEditor(),
 
