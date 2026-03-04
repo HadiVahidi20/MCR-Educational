@@ -61,7 +61,7 @@ export default function Home() {
       >
         {/* Hero background image */}
         <Image
-          src="/images/hero/hero-dance.jpg"
+          src="https://mcr-landing-modern.vercel.app/assets/images/peter-jones-award.jpg"
           alt=""
           fill
           priority
