@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, BookOpen, Music, Heart, Briefcase } from 'lucide-react';
 
@@ -12,6 +13,8 @@ const programmes = [
     color: 'bg-primary',
     lightColor: 'bg-primary/8',
     textColor: 'text-primary',
+    image: '/images/programmes/academic.jpg',
+    imageAlt: 'Students studying together in a classroom',
   },
   {
     Icon: Music,
@@ -23,6 +26,8 @@ const programmes = [
     color: 'bg-secondary',
     lightColor: 'bg-secondary/8',
     textColor: 'text-secondary',
+    image: '/images/programmes/creative-arts.jpg',
+    imageAlt: 'Young people dancing and performing',
   },
   {
     Icon: Heart,
@@ -34,6 +39,8 @@ const programmes = [
     color: 'bg-accent',
     lightColor: 'bg-accent/8',
     textColor: 'text-accent',
+    image: '/images/programmes/wellbeing.jpg',
+    imageAlt: 'Mentoring and wellbeing support session',
   },
   {
     Icon: Briefcase,
@@ -45,6 +52,8 @@ const programmes = [
     color: 'bg-neutral-dark',
     lightColor: 'bg-neutral-dark/6',
     textColor: 'text-neutral-dark',
+    image: '/images/programmes/life-skills.jpg',
+    imageAlt: 'Young people developing employability skills',
   },
 ];
 
@@ -83,14 +92,23 @@ export default function ProgrammesGrid() {
           role="list"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {programmes.map(({ Icon, title, slug, description, tags, color, lightColor, textColor }) => (
+          {programmes.map(({ Icon, title, slug, description, tags, color, lightColor, textColor, image, imageAlt }) => (
             <li key={slug}>
               <Link
                 href={`/programmes/${slug}`}
                 className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-neutral-100 hover:shadow-lg hover:border-transparent transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
-                {/* Coloured top strip */}
-                <div className={`h-2 w-full ${color}`} aria-hidden="true" />
+                {/* Programme image */}
+                <div className="relative h-40 w-full overflow-hidden">
+                  <Image
+                    src={image}
+                    alt={imageAlt}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  <div className={`absolute bottom-0 left-0 right-0 h-1.5 ${color}`} aria-hidden="true" />
+                </div>
 
                 <div className="flex flex-col flex-1 p-6">
                   {/* Icon */}

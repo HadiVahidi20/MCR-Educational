@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { BookOpen, Users, GraduationCap } from 'lucide-react'
 
 const highlights = [
@@ -44,8 +45,18 @@ export default function OurStory() {
             </div>
           </div>
 
-          {/* Stats card column */}
-          <div className="relative">
+          {/* Image + Stats card column */}
+          <div className="relative space-y-6">
+            {/* Story image */}
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="/images/about/our-story.jpg"
+                alt="Young people collaborating in a creative learning environment"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
             {/* Decorative blob */}
             <div
               className="absolute -top-8 -right-8 w-48 h-48 rounded-full bg-accent/15 blur-2xl pointer-events-none"

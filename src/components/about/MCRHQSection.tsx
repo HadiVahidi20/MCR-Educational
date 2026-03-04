@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowUpRight, Building2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -22,31 +23,43 @@ export default function MCRHQSection() {
               className="absolute -top-8 -left-8 w-56 h-56 rounded-full bg-primary/8 blur-2xl pointer-events-none"
               aria-hidden="true"
             />
-            <div className="relative rounded-3xl bg-primary/5 border border-primary/10 p-10 sm:p-14 flex flex-col items-center justify-center text-center gap-6 min-h-[280px]">
-              <div className="w-16 h-16 rounded-2xl bg-primary text-white flex items-center justify-center">
-                <Building2 size={28} aria-hidden="true" />
+            <div className="relative rounded-3xl bg-primary/5 border border-primary/10 overflow-hidden flex flex-col min-h-[280px]">
+              {/* Community image */}
+              <div className="relative h-44 w-full">
+                <Image
+                  src="/images/about/community.jpg"
+                  alt="MCR HQ community gathering"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
-              <div>
-                <p className="font-heading font-bold text-primary text-2xl mb-1">MCR HQ CIC</p>
-                <p className="text-neutral-dark/50 text-sm">Community Interest Company</p>
-                <p className="text-neutral-dark/50 text-sm">Greater Manchester</p>
-              </div>
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className="border-primary/30 text-primary hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-              >
-                <a
-                  href="https://mcrhq.co.uk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Visit MCR HQ CIC website (opens in new tab)"
+              <div className="flex flex-col items-center justify-center text-center gap-4 p-8">
+                <div className="w-14 h-14 rounded-2xl bg-primary text-white flex items-center justify-center -mt-12 relative z-10 shadow-lg border-4 border-white">
+                  <Building2 size={24} aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="font-heading font-bold text-primary text-2xl mb-1">MCR HQ CIC</p>
+                  <p className="text-neutral-dark/50 text-sm">Community Interest Company</p>
+                  <p className="text-neutral-dark/50 text-sm">Greater Manchester</p>
+                </div>
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className="border-primary/30 text-primary hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                 >
-                  Visit MCR HQ
-                  <ArrowUpRight size={14} aria-hidden="true" className="ml-1" />
-                </a>
-              </Button>
+                  <a
+                    href="https://mcrhq.co.uk"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Visit MCR HQ CIC website (opens in new tab)"
+                  >
+                    Visit MCR HQ
+                    <ArrowUpRight size={14} aria-hidden="true" className="ml-1" />
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
 

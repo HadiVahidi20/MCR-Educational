@@ -1,5 +1,6 @@
 // FILE: src/components/for-students/ForStudentsHero.tsx
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { Music, GraduationCap, Users, ArrowRight, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -37,6 +38,15 @@ export default function ForStudentsHero() {
       aria-labelledby="for-students-hero-heading"
       className="relative bg-gradient-to-br from-primary via-primary/90 to-accent/80 pt-24 pb-0 sm:pt-28 overflow-hidden"
     >
+      {/* Background image */}
+      <Image
+        src="/images/pages/students.jpg"
+        alt=""
+        fill
+        priority
+        className="object-cover opacity-12"
+        sizes="100vw"
+      />
       {/* Decorative blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full bg-secondary/20 blur-3xl" />

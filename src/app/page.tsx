@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, School, Users, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -58,6 +59,15 @@ export default function Home() {
         aria-labelledby="hero-heading"
         className="relative min-h-[92vh] flex items-center overflow-hidden bg-primary"
       >
+        {/* Hero background image */}
+        <Image
+          src="/images/hero/hero-dance.jpg"
+          alt=""
+          fill
+          priority
+          className="object-cover opacity-20"
+          sizes="100vw"
+        />
         {/* Decorative background shapes */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
           <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-secondary/20 blur-3xl" />

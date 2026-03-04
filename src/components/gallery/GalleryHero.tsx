@@ -1,5 +1,6 @@
 // FILE: src/components/gallery/GalleryHero.tsx
 
+import Image from 'next/image'
 import { Images } from 'lucide-react'
 import Link from 'next/link'
 
@@ -9,6 +10,15 @@ export default function GalleryHero() {
       aria-labelledby="gallery-hero-heading"
       className="relative bg-primary pt-24 pb-20 sm:pt-28 sm:pb-24 overflow-hidden"
     >
+      {/* Background image */}
+      <Image
+        src="/images/gallery/gallery-4.jpg"
+        alt=""
+        fill
+        priority
+        className="object-cover opacity-15"
+        sizes="100vw"
+      />
       {/* Decorative background shapes */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-secondary/20 blur-3xl" />

@@ -3,6 +3,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { Play } from 'lucide-react'
 import { GALLERY_ITEMS, GALLERY_ALBUMS, type GalleryItem } from '@/lib/gallery-data'
 import GalleryLightbox from './GalleryLightbox'
@@ -65,19 +66,30 @@ export default function GalleryGrid() {
                 'transition-opacity duration-500',
               ].join(' ')}
             >
-              {/* Gradient tile */}
+              {/* Image tile */}
               <div
-                className={`${item.aspectRatio} w-full bg-gradient-to-br ${item.accentColor} relative flex items-center justify-center`}
+                className={`${item.aspectRatio} w-full relative overflow-hidden`}
               >
+                {item.imageSrc ? (
+                  <Image
+                    src={item.imageSrc}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  />
+                ) : (
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.accentColor}`} />
+                )}
                 {/* Overlay for hover */}
                 <div
-                  className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"
+                  className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300"
                   aria-hidden="true"
                 />
 
-                {/* Placeholder label */}
-                <span className="relative z-10 text-white/80 text-xs font-body font-medium px-3 text-center leading-tight drop-shadow">
-                  {item.placeholder}
+                {/* Title label on hover */}
+                <span className="absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/60 to-transparent px-3 py-2 text-white/90 text-xs font-body font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {item.title}
                 </span>
 
                 {/* Play overlay for videos */}

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,6 +9,14 @@ export default function CtaBanner() {
       aria-labelledby="cta-heading"
       className="bg-secondary relative overflow-hidden py-20 sm:py-24"
     >
+      {/* Background image */}
+      <Image
+        src="/images/hero/cta-background.jpg"
+        alt=""
+        fill
+        className="object-cover opacity-10"
+        sizes="100vw"
+      />
       {/* Decorative shapes */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white/10 blur-2xl" />

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Download, Phone } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -8,6 +9,15 @@ export default function ForSchoolsHero() {
       aria-labelledby="for-schools-hero-heading"
       className="relative bg-primary pt-24 pb-20 sm:pt-28 sm:pb-28 overflow-hidden"
     >
+      {/* Background image */}
+      <Image
+        src="/images/pages/schools.jpg"
+        alt=""
+        fill
+        priority
+        className="object-cover opacity-15"
+        sizes="100vw"
+      />
       {/* Decorative shapes */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-secondary/15 blur-3xl" />
