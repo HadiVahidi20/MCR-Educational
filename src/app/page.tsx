@@ -61,7 +61,7 @@ export default function Home() {
       >
         {/* Hero background image */}
         <Image
-          src="https://mcr-landing-modern.vercel.app/assets/images/peter-jones-award.jpg"
+          src="https://images.pexels.com/photos/5211457/pexels-photo-5211457.jpeg"
           alt=""
           fill
           priority
